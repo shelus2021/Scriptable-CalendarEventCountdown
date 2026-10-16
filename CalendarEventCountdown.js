@@ -816,20 +816,14 @@ async function setMonthWidget(widget,monDic,weekStartsMonday){ // 154*125
 			// day事件渲染  3*3 隔1，18/(3+1) = 4个事件指示
 			var eventNum = 4;
 			if( Object.keys(monDic).length>0 ){
-				var i = 0;
-				for(var dayInfo of monDic[day.date]){
-					i++;
-					if( i>eventNum ){ break; }
-					if( !dayInfo.color ){ continue; }
-					if( hideRestEvent ){
-						// 在事件指示器中跳过休班事件渲染
-						if( dayInfo.calendar==restCalendarTitle && (dayInfo.title.includes(restEventTitle)||dayInfo.title.includes(workEventTitle)) ){ continue; }
-					}
+				var visibleDayEvents = getVisibleMonthEvents(monDic[day.date],eventNum);
+				for(var i=0;i<visibleDayEvents.length;i++){
+					var dayInfo = visibleDayEvents[i];
 					var eventStack = eventsStack.addStack();
 					eventStack.size = new Size(3, 3);
 					eventStack.cornerRadius = 9; // 圆角
 					eventStack.backgroundColor = new Color("#"+dayInfo.color);
-					if( i<monDic[day.date].length && i<eventNum ){
+					if( i<visibleDayEvents.length-1 ){
 						var spaceStack = eventsStack.addStack();
 						spaceStack.size = new Size(3, 1);
 					}
@@ -943,15 +937,8 @@ async function setBigMonthWidget(widget,monDic,weekStartsMonday){ // 475*254
 			//添加该day事件指示 45*10 不隔，40/10 = 4个事件指示
 			var eventNum = 4;
 			if( Object.keys(monDic).length>0 ){
-				var i = 0;
-				for(var dayInfo of monDic[day.date]){
-					i++;
-					if( i>eventNum ){ break; }
-					if( !dayInfo.color ){ continue; }
-					if( hideRestEvent ){
-						// 在事件指示器中跳过休班事件渲染
-						if( dayInfo.calendar==restCalendarTitle && (dayInfo.title.includes(restEventTitle)||dayInfo.title.includes(workEventTitle)) ){ continue; }
-					}
+				var visibleDayEvents = getVisibleMonthEvents(monDic[day.date],eventNum);
+				for(var dayInfo of visibleDayEvents){
 					var eventStack = eventsStack.addStack();
 					eventStack.size = new Size(45, 10);
 					var title = eventStack.addText(dayInfo.title);
@@ -1035,10 +1022,7 @@ async function getMonDic(){
 			var event = await CalendarEvent.between(startTime, endTime, await Calendar.forEvents());
 			for(var eve of event){ dayEvents.push(eve); }
 
-			if( dayEvents.length===0 ){
-				dayEvents = [errEve];
-			}
-			else{//有事件处理
+			if( dayEvents.length>0 ){//有事件处理
 				dayEvents = dayEvents.sort(dateData("startDate","endDate"));
 				dayEvents = dealEvents(dayEvents);
 			}
@@ -1051,6 +1035,27 @@ async function getMonDic(){
 		}
 	}
     return monDic;
+}
+
+/**
+ * 过滤月历中不应显示的事件，并在过滤后限制显示数量。
+ * 隐藏事件不会占用每天最多显示事件的名额。
+ * @param {Array} dayEvents 当天事件
+ * @param {number} limit 最大显示数量
+ * @returns Array
+ */
+function getVisibleMonthEvents(dayEvents,limit){
+	var visibleEvents = [];
+	for(var dayInfo of dayEvents || []){
+		if( !dayInfo.color ){ continue; }
+		if( hideRestEvent && dayInfo.calendar==restCalendarTitle &&
+			(dayInfo.title.includes(restEventTitle)||dayInfo.title.includes(workEventTitle)) ){
+			continue;
+		}
+		visibleEvents.push(dayInfo);
+		if( visibleEvents.length>=limit ){ break; }
+	}
+	return visibleEvents;
 }
 
 /**

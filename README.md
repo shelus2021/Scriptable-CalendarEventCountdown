@@ -155,6 +155,7 @@ John’s Birthday → Sb’s Birthday
 | `setBigMonthWidget()` | 绘制 iPadOS 宽版月历和事件标题 |
 | `getEventsBy()` | 按参数查询、排序和筛选事件 |
 | `getMonDic()` | 建立月历日期与事件的映射 |
+| `getVisibleMonthEvents()` | 过滤月历隐藏事件，再限制每天的可见事件数量 |
 | `dealEvents()` | 生成相对日期、格式化时间并处理生日标题 |
 | `calendarCal()` | 生成以完整周排列的当月日期网格 |
 | `tr()`、`formatRelativeDay()` | 提供中英文界面文字 |
