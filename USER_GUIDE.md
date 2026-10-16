@@ -192,6 +192,6 @@ The month view reads events for every day in its complete calendar grid. More ca
 
 ## Copyright and License
 
-Copyright © Shelus2021.
+Copyright © shelus2021.
 
-You may use, modify, and redistribute this project for noncommercial purposes, provided that the attribution to Shelus2021 and the license information are retained. Selling it, including it in a paid product or service, or otherwise using it commercially requires prior written permission from the author. See [`LICENSE.md`](./LICENSE.md) for the complete terms.
+This widget is an original work independently created by shelus2021. You may use, modify, and redistribute it for noncommercial purposes, provided that the original author, source, and license information are retained. You may not present the original or a modified version as entirely your own original work. Selling it, including it in a paid product or service, or otherwise using it commercially requires prior written permission from the author. See [`LICENSE.md`](./LICENSE.md) for the complete terms.

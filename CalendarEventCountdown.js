@@ -4,12 +4,12 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: magic;
-// 作者：Shelus2021
-// Copyright © Shelus2021.
+// 作者：shelus2021
+// Copyright © shelus2021.
 // Licensed under the PolyForm Noncommercial License 1.0.0.
 // Noncommercial use, modification, and redistribution are permitted with attribution.
 // License: https://polyformproject.org/licenses/noncommercial/1.0.0
-// Required Notice: Copyright © Shelus2021. Original work: Calendar Event Countdown.
+// Required Notice: Copyright © shelus2021. Original work: Calendar Event Countdown.
 // 支持iOS所有规格小组件，尽情使用。
 // 参数：一个日历名称、或者多个日历名称用/隔开、或者一个事件标题、或者一个事件标题的一部分
 // 参数之间用.隔开
